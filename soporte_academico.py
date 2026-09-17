@@ -1,5 +1,6 @@
 # Archivo principal del sistema
- 
+ # cristian Huaman Rojas
+
  def mostrar_menu():
     print("\n" + "=" * 45)
     print("   SISTEMA DE SOPORTE ACADÉMICO")
