@@ -63,3 +63,19 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+def mostrar_estadisticas(lista_solicitudes):
+    """Muestra cuántas solicitudes hay por prioridad."""
+    if len(lista_solicitudes) == 0:
+        print("\n   No hay solicitudes para mostrar estadísticas.")
+        return
+    altas = sum(1 for s in lista_solicitudes if s["prioridad"] == "ALTA")
+    medias = sum(1 for s in lista_solicitudes if s["prioridad"] == "MEDIA")
+    bajas = sum(1 for s in lista_solicitudes if s["prioridad"] == "BAJA")
+    print("\n" + "=" * 45)
+    print("   ESTADÍSTICAS DE ATENCIÓN")
+    print("=" * 45)
+    print(f"  Prioridad ALTA : {altas}")
+    print(f"  Prioridad MEDIA: {medias}")
+    print(f"  Prioridad BAJA : {bajas}")
+    print("=" * 45)
