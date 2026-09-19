@@ -36,6 +36,39 @@ def registrar_solicitud():
     print(f"\n   Solicitud registrada con prioridad {prioridad}.")
     return solicitud
 
+# Archivo principal del sistema
+# Alvaro Leandro Gurtierrez Carranza
+
+def validar_texto(valor, nombre_campo):
+    if valor is None or valor.strip() == "":
+        print(f"   Error: El campo '{nombre_campo}' no puede estar vacío.")
+        return False
+    return True
+
+def validar_codigo(codigo):
+    if not validar_texto(codigo, "código de estudiante"):
+        return False
+    if len(codigo.strip()) < 4:
+        print("   Error: El código debe tener al menos 4 caracteres.")
+        return False
+    return True
+
+def validar_tipo_consulta(tipo):
+    tipos_validos = ["matrícula", "pagos", "constancia", "plataforma", "otro"]
+    if tipo.lower().strip() not in tipos_validos:
+        print(f"   Error: Tipo de consulta inválido. Use: {', '.join(tipos_validos)}")
+        return False
+    return True
+
+def calcular_prioridad(tipo_consulta):
+    tipo = tipo_consulta.lower().strip()
+    if tipo == "pagos" or tipo == "matrícula":
+        return "ALTA"
+    elif tipo == "plataforma":
+        return "MEDIA"
+    else:
+        return "BAJA"
+
 
 # Archivo principal del sistema
 # Orlando correa Flores
