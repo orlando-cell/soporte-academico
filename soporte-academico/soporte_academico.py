@@ -1,8 +1,56 @@
+# ===============================================
+# SISTEMA DE SOPORTE ACADÉMICO
+# Laboratorio N° 2 - Funciones y Modularidad
+# ===============================================
 
-# Archivo principal del sistema
- # cristian Huaman Rojas
+# -----------------------------------
+# FUNCIONES DE VALIDACIÓN
+# Álvaro Leandro Gutiérrez Carranza
+# ----------------------------------
+def validar_texto(valor, nombre_campo):
+    """Valida que un texto no esté vacío."""
+    if valor is None or valor.strip() == "":
+        print(f"Error: El campo '{nombre_campo}' no puede estar vacío.")
+        return False
+    return True
 
+def validar_codigo(codigo):
+    """Valida que el código no esté vacío y tenga al menos 4 caracteres."""
+    if not validar_texto(codigo, "código de estudiante"):
+        return False
+    if len(codigo.strip()) < 4:
+        print("Error: El código debe tener al menos 4 caracteres.")
+        return False
+    return True
+
+def validar_tipo_consulta(tipo):
+    """Valida que el tipo de consulta esté en la lista permitida."""
+    tipos_validos = ["matrícula", "pagos", "constancia", "plataforma", "otro"]
+    if tipo.lower().strip() not in tipos_validos:
+        print(f"Error: Tipo de consulta inválido. Use: {', '.join(tipos_validos)}")
+        return False
+    return True
+
+# ----------------------------------
+# FUNCIÓN DE CÁLCULO DE PRIORIDAD
+# Álvaro Leandro Gutiérrez Carranza
+# ----------------------------------
+def calcular_prioridad(tipo_consulta):
+    """Asigna prioridad según el tipo de consulta."""
+    tipo = tipo_consulta.lower().strip()
+    if tipo == "pagos" or tipo == "matrícula":
+        return "ALTA"
+    elif tipo == "plataforma":
+        return "MEDIA"
+    else:
+        return "BAJA"
+
+# ------------------------------
+# FUNCIONES DE MENÚ Y REGISTRO
+# Cristian Omar Huamán Rojas
+# ------------------------------
 def mostrar_menu():
+    """Muestra el menú principal del sistema."""
     print("\n" + "=" * 45)
     print("   SISTEMA DE SOPORTE ACADÉMICO")
     print("=" * 45)
@@ -12,7 +60,8 @@ def mostrar_menu():
     print("=" * 45)
 
 def registrar_solicitud():
-    print("\n--- REGISTRO DE NUEVA SOLICITUD ---")
+    """Registra una nueva solicitud validando los datos."""
+    print("\n---REGISTRO DE NUEVA SOLICITUD ---")
     codigo = input("Ingrese código de estudiante: ")
     if not validar_codigo(codigo):
         return None
@@ -33,43 +82,15 @@ def registrar_solicitud():
         "descripcion": descripcion.strip(),
         "prioridad": prioridad
     }
-    print(f"\n   Solicitud registrada con prioridad {prioridad}.")
+    print(f"\nSolicitud registrada con prioridad {prioridad}.")
     return solicitud
 
-# Archivo principal del sistema
-# Alvaro Gutierrez Carranza
-def validar_texto(valor, nombre_campo):
-    if valor is None or valor.strip() == "":
-        print(f"   Error: El campo '{nombre_campo}' no puede estar vacío.")
-        return False
-    return True
-
-def validar_codigo(codigo):
-    if not validar_texto(codigo, "código de estudiante"):
-        return False
-    if len(codigo.strip()) < 4:
-        print("   Error: El código debe tener al menos 4 caracteres.")
-        return False
-    return True
-
-def validar_tipo_consulta(tipo):
-    tipos_validos = ["matrícula", "pagos", "constancia", "plataforma", "otro"]
-    if tipo.lower().strip() not in tipos_validos:
-        print(f"   Error: Tipo de consulta inválido. Use: {', '.join(tipos_validos)}")
-        return False
-    return True
-
-def calcular_prioridad(tipo_consulta):
-    tipo = tipo_consulta.lower().strip()
-    if tipo == "pagos" or tipo == "matrícula":
-        return "ALTA"
-    elif tipo == "plataforma":
-        return "MEDIA"
-    else:
-        return "BAJA"
-     # Archivo Principal Del Sistema 
-     # Zinedine Michael Callirgos Cabanillas 
+# --------------------------------------
+# FUNCIONES DE RESUMEN Y LISTADO
+# Zinedine Michael Callirgos Cabanillas
+# --------------------------------------
 def mostrar_resumen(solicitud):
+    """Muestra el resumen de una solicitud."""
     print("\n" + "-" * 45)
     print("   RESUMEN DE LA SOLICITUD")
     print("-" * 45)
@@ -81,17 +102,41 @@ def mostrar_resumen(solicitud):
     print("-" * 45)
 
 def mostrar_todas_las_solicitudes(lista_solicitudes):
+    """Muestra todas las solicitudes registradas."""
     if len(lista_solicitudes) == 0:
-        print("\n  No hay solicitudes registradas.")
+        print("\nNo hay solicitudes registradas.")
         return
     print(f"\n  Total de solicitudes registradas: {len(lista_solicitudes)}")
     for i, solicitud in enumerate(lista_solicitudes, 1):
-        print(f"\n  --- Solicitud N° {i} ---")
+        print(f"\n--- Solicitud N° {i} ---")
         mostrar_resumen(solicitud)
 
-# Archivo principal del sistema
-# Orlando correa Flores
+# -------------------------------
+# FUNCIÓN DE ESTADÍSTICAS
+# Anthony Rene Terraz Terrones
+# -------------------------------
+def mostrar_estadisticas(lista_solicitudes):
+    """Muestra cuántas solicitudes hay por prioridad."""
+    if len(lista_solicitudes) == 0:
+        print("\nNo hay solicitudes para mostrar estadísticas.")
+        return
+    altas = sum(1 for s in lista_solicitudes if s["prioridad"] == "ALTA")
+    medias = sum(1 for s in lista_solicitudes if s["prioridad"] == "MEDIA")
+    bajas = sum(1 for s in lista_solicitudes if s["prioridad"] == "BAJA")
+    print("\n" + "=" * 45)
+    print("   ESTADÍSTICAS DE ATENCIÓN")
+    print("=" * 45)
+    print(f"Prioridad ALTA: {altas}")
+    print(f"Prioridad MEDIA: {medias}")
+    print(f"Prioridad BAJA : {bajas}")
+    print("=" * 45)
+
+# ----------------------------
+# FUNCIÓN PRINCIPAL
+# Juan Orlando Correa Flores
+# ----------------------------
 def main():
+    """Controla el flujo principal del programa."""
     solicitudes = []
     opcion = ""
     while opcion != "3":
@@ -99,7 +144,7 @@ def main():
         opcion = input("Seleccione una opción: ").strip()
         if opcion == "1":
             if len(solicitudes) >= 3:
-                print("\n  ⚠ Ya se registraron 3 solicitudes (límite de la práctica).")
+                print("\nYa se registraron 3 solicitudes (límite de la práctica).")
                 continue
             nueva = registrar_solicitud()
             if nueva is not None:
@@ -108,32 +153,12 @@ def main():
         elif opcion == "2":
             mostrar_todas_las_solicitudes(solicitudes)
         elif opcion == "3":
-            print("\n  👋 Saliendo del sistema. ¡Hasta luego!")
+            print("\nSaliendo del sistema. ¡Hasta luego!")
         else:
-            print("\n  ❌ Opción inválida. Intente de nuevo.")
+            print("\nOpción inválida. Intente de nuevo.")
 
-
+# ------------------
+# PUNTO DE ENTRADA
+# -------------------
 if __name__ == "__main__":
     main()
-
-def mostrar_estadisticas(lista_solicitudes):
-    """Muestra cuántas solicitudes hay por prioridad."""
-    if len(lista_solicitudes) == 0:
-        print("\n   No hay solicitudes para mostrar estadísticas.")
-        return
-    altas = sum(1 for s in lista_solicitudes if s["prioridad"] == "ALTA")
-    medias = sum(1 for s in lista_solicitudes if s["prioridad"] == "MEDIA")
-    bajas = sum(1 for s in lista_solicitudes if s["prioridad"] == "BAJA")
-    print("\n" + "=" * 45)
-    print("   ESTADÍSTICAS DE ATENCIÓN")
-    print("=" * 45)
-    print(f"  Prioridad ALTA : {altas}")
-    print(f"  Prioridad MEDIA: {medias}")
-    print(f"  Prioridad BAJA : {bajas}")
-    print("=" * 45)
- # Archivo Principal Del Sistema 
- # Zinedine Michael Callirgos Cabanillas 
- def validar_nombre(nombre):
-  return nombre .replace("","").isalpha()
-  def validar_codigo(codigo):
-   return codigo .isdigit() and 
