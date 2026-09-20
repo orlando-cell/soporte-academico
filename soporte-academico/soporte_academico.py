@@ -67,7 +67,27 @@ def calcular_prioridad(tipo_consulta):
         return "MEDIA"
     else:
         return "BAJA"
+     # Archivo Principal Del Sistema 
+     # Zinedine Michael Callirgos Cabanillas 
+def mostrar_resumen(solicitud):
+    print("\n" + "-" * 45)
+    print("   RESUMEN DE LA SOLICITUD")
+    print("-" * 45)
+    print(f"  Código     : {solicitud['codigo']}")
+    print(f"  Nombre     : {solicitud['nombre']}")
+    print(f"  Tipo       : {solicitud['tipo']}")
+    print(f"  Descripción: {solicitud['descripcion']}")
+    print(f"  Prioridad  : {solicitud['prioridad']}")
+    print("-" * 45)
 
+def mostrar_todas_las_solicitudes(lista_solicitudes):
+    if len(lista_solicitudes) == 0:
+        print("\n  No hay solicitudes registradas.")
+        return
+    print(f"\n  Total de solicitudes registradas: {len(lista_solicitudes)}")
+    for i, solicitud in enumerate(lista_solicitudes, 1):
+        print(f"\n  --- Solicitud N° {i} ---")
+        mostrar_resumen(solicitud)
 
 # Archivo principal del sistema
 # Orlando correa Flores
