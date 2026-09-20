@@ -111,3 +111,9 @@ def mostrar_estadisticas(lista_solicitudes):
     print(f"  Prioridad MEDIA: {medias}")
     print(f"  Prioridad BAJA : {bajas}")
     print("=" * 45)
+ # Archivo Principal Del Sistema 
+ # Zinedine Michael Callirgos Cabanillas 
+ def validar_nombre(nombre):
+  return nombre .replace("","").isalpha()
+  def validar_codigo(codigo):
+   return codigo .isdigit() and 
